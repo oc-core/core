@@ -1,0 +1,26 @@
+# SPDX-FileCopyrightText: 2026 Open Communities Core contributors
+# SPDX-License-Identifier: CC0-1.0
+name: Bug report
+description: Something does not behave as documented
+labels: [bug]
+body:
+  - type: textarea
+    attributes:
+      label: What happened
+      description: What you did, what you expected, what you saw. No personal data, please.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Version or commit
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      render: shell
+  - type: textarea
+    attributes:
+      label: Logs or output
+      description: Redact anything private.
+      render: text

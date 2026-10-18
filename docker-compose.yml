@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: 2026 Open Communities Core contributors
+# SPDX-License-Identifier: CC0-1.0
+#
+# Local development dependencies. The application itself runs with `mix phx.server`.
+#   docker compose up -d
+# The host port defaults to 5432; set OCC_DB_PORT (for example in .env) when it is taken.
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "${OCC_DB_PORT:-5432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  postgres-data:

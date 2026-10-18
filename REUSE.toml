@@ -1,0 +1,32 @@
+# SPDX-FileCopyrightText: 2026 Open Communities Core contributors
+# SPDX-License-Identifier: CC0-1.0
+version = 1
+SPDX-PackageName = "Open Communities Core"
+SPDX-PackageSupplier = "Open Communities Core contributors"
+SPDX-PackageDownloadLocation = "https://github.com/oc-core/core"
+
+# Source code without a header of its own (none expected; headers are the rule).
+[[annotations]]
+path = ["**/*.ex", "**/*.exs", "**/*.heex"]
+precedence = "closest"
+SPDX-FileCopyrightText = "2026 Open Communities Core contributors"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+# Prose.
+[[annotations]]
+path = ["**/*.md", "AGENTS.md"]
+precedence = "closest"
+SPDX-FileCopyrightText = "2026 Open Communities Core contributors"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+# Configuration, metadata, lockfiles, generated and dot files.
+[[annotations]]
+path = [
+  ".gitignore", ".env.example", ".tool-versions", ".formatter.exs", ".credo.exs",
+  "**/.gitignore", "**/.formatter.exs", "**/.gitkeep",
+  "mix.lock", "**/*.yml", "**/*.yaml", "**/*.toml", "**/*.json", "**/*.cff",
+  "Dockerfile", "docker-compose.yml", "**/*.sql", "**/*.txt", "**/*.ico", "**/*.png", "**/*.svg"
+]
+precedence = "closest"
+SPDX-FileCopyrightText = "2026 Open Communities Core contributors"
+SPDX-License-Identifier = "CC0-1.0"

@@ -1,0 +1,46 @@
+# SPDX-FileCopyrightText: 2026 Open Communities Core contributors
+# SPDX-License-Identifier: CC0-1.0
+# publiccode.yml: metadata standard for public software, https://yml.publiccode.tools/
+publiccodeYmlVersion: "0.4"
+name: Open Communities Core
+url: "https://github.com/oc-core/core"
+softwareVersion: "0.1.0-dev"
+releaseDate: "2026-10-18"
+developmentStatus: development
+softwareType: standalone/backend
+platforms:
+  - web
+categories:
+  - collaboration
+  - communication
+  - identity-management
+usedBy: []
+legal:
+  license: AGPL-3.0-or-later
+  repoOwner: Open Communities Core contributors
+maintenance:
+  type: community
+  contacts:
+    - name: Adrian Boros
+localisation:
+  localisationReady: false
+  availableLanguages:
+    - en
+description:
+  en:
+    shortDescription: >-
+      Open-source infrastructure for community ownership, identity, privacy, federation
+      and portability.
+    longDescription: >-
+      Open Communities Core (OCC) lets people and organisations create, administer, transfer
+      and move private digital communities, whether the initiative comes from an institution
+      or from the members themselves. It owns the canonical model for identity, communities,
+      membership, roles, policies and governance. Federation over ActivityPub and portability
+      between instances are adapters on top of that model. Communities are private by default
+      and can choose to be discoverable or federated. The first application built on OCC is a
+      platform for early-education communities.
+    features:
+      - Community lifecycle independent of any organisation
+      - Governance as policy, with auditable transfer of control
+      - Private by default; optional ActivityPub federation
+      - Community portability between instances

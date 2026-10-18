@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: 2026 Open Communities Core contributors
+# SPDX-License-Identifier: CC0-1.0
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Open Communities Core"
+abstract: "Open-source infrastructure for community ownership, identity, privacy, federation and portability."
+type: software
+authors:
+  - family-names: Boros
+    given-names: Adrian
+  - name: "Open Communities Core contributors"
+repository-code: "https://github.com/oc-core/core"
+license: AGPL-3.0-or-later
+version: 0.1.0-dev
+date-released: 2026-10-18
+keywords:
+  - communities
+  - governance
+  - activitypub
+  - fediverse
+  - data-portability
+  - elixir
