@@ -12,7 +12,7 @@ Planned, in order:
 
 | Specification | Content | Status |
 |---|---|---|
-| Governance policy | modes, proposal rights, approval rules, recovery rules; JSON Schema | planned |
+| [Governance policy](governance-policy.md) | modes, rights, approval rules, transfer of control, recovery rule, governance log; [JSON Schema](schemas/governance-policy.schema.json) and [examples](examples/) | draft 0.1 |
 | Community archive | the export format for a community: manifest, memberships, roles, policies, governance log, content manifest, per-field transfer classes, integrity hashes; JSON Schema and sample | planned |
 | Privacy modes | what private, discoverable and federated permit, as normative statements | planned |
 | Adapter capabilities | the capability declaration a federation or portability adapter publishes | planned |

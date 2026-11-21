@@ -1,0 +1,414 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:occ:spec:governance-policy:0.1",
+  "title": "OCC governance policy",
+  "description": "Policy document defined by docs/specs/governance-policy.md, version 0.1. Section 12 of that document lists rules this schema cannot express.",
+  "$ref": "#/$defs/policy",
+  "$defs": {
+    "right": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+    },
+    "roleId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "rights": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/right"
+      },
+      "uniqueItems": true
+    },
+    "role": {
+      "type": "object",
+      "required": [
+        "id",
+        "rights"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/roleId"
+        },
+        "rights": {
+          "$ref": "#/$defs/rights"
+        },
+        "delegable": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/rights"
+            },
+            {
+              "not": {
+                "contains": {
+                  "enum": [
+                    "policy.amend",
+                    "transfer.propose"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "min_holders": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_holders": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "control": {
+      "type": "object",
+      "required": [
+        "role",
+        "holder"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "$ref": "#/$defs/roleId"
+        },
+        "holder": {
+          "enum": [
+            "person",
+            "organisation"
+          ]
+        }
+      }
+    },
+    "approval": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "role",
+            "count"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "count"
+            },
+            "role": {
+              "$ref": "#/$defs/roleId"
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "role"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "all"
+            },
+            "role": {
+              "$ref": "#/$defs/roleId"
+            }
+          }
+        }
+      ]
+    },
+    "rule": {
+      "type": "object",
+      "required": [
+        "action",
+        "approval"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/right"
+        },
+        "approval": {
+          "$ref": "#/$defs/approval"
+        },
+        "expires_after_days": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "transfer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "notice_days": {
+          "type": "integer",
+          "minimum": 14
+        },
+        "accept_within_days": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "recovery": {
+      "type": "object",
+      "required": [
+        "inactivity_days"
+      ],
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "successor"
+          ]
+        },
+        {
+          "required": [
+            "quorum"
+          ]
+        }
+      ],
+      "properties": {
+        "inactivity_days": {
+          "type": "integer",
+          "minimum": 30
+        },
+        "successor": {
+          "type": "object",
+          "required": [
+            "membership"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "membership": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "quorum": {
+          "type": "object",
+          "required": [
+            "count"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "count": {
+              "type": "integer",
+              "minimum": 2
+            }
+          }
+        }
+      }
+    },
+    "transition": {
+      "type": "object",
+      "required": [
+        "from",
+        "to",
+        "suspended",
+        "incoming"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "from": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "to": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/policy"
+            },
+            {
+              "properties": {
+                "mode": {
+                  "enum": [
+                    "individual",
+                    "institutional",
+                    "shared"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "suspended": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/rights"
+            },
+            {
+              "contains": {
+                "const": "policy.amend"
+              }
+            },
+            {
+              "contains": {
+                "const": "community.close"
+              }
+            },
+            {
+              "contains": {
+                "const": "privacy.change"
+              }
+            },
+            {
+              "contains": {
+                "const": "portability.move"
+              }
+            },
+            {
+              "contains": {
+                "const": "transfer.propose"
+              }
+            }
+          ]
+        },
+        "incoming": {
+          "type": "array",
+          "items": {
+            "const": "log.read"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "required": [
+        "spec",
+        "version",
+        "mode",
+        "roles",
+        "control",
+        "rules"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "spec": {
+          "const": "occ.governance-policy"
+        },
+        "version": {
+          "const": "0.1"
+        },
+        "mode": {
+          "enum": [
+            "individual",
+            "institutional",
+            "shared",
+            "transitional"
+          ]
+        },
+        "roles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/role"
+          }
+        },
+        "control": {
+          "$ref": "#/$defs/control"
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/rule"
+          }
+        },
+        "transfer": {
+          "$ref": "#/$defs/transfer"
+        },
+        "recovery": {
+          "$ref": "#/$defs/recovery"
+        },
+        "transition": {
+          "$ref": "#/$defs/transition"
+        },
+        "extensions": {
+          "type": "object"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "individual"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "control": {
+                "properties": {
+                  "holder": {
+                    "const": "person"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "institutional"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "control": {
+                "properties": {
+                  "holder": {
+                    "const": "organisation"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "transitional"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "transition"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "transition"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}
