@@ -86,7 +86,8 @@ not the public tracker.
 ## Licence
 
 Code is licensed under the GNU Affero General Public License v3.0 or later
-([LICENSE](LICENSE)). Documentation is CC-BY-4.0. The repository follows the
+([LICENSE](LICENSE)). Documentation is CC-BY-4.0. Specification schemas and examples in
+`docs/specs/` are Apache-2.0. The repository follows the
 [REUSE](https://reuse.software/) specification; see `REUSE.toml` and `LICENSES/`.
 
 Open Communities Core is maintained by its contributors. The first application built on it is
