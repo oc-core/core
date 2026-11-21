@@ -30,3 +30,10 @@ path = [
 precedence = "closest"
 SPDX-FileCopyrightText = "2026 Open Communities Core contributors"
 SPDX-License-Identifier = "CC0-1.0"
+
+# Specification schemas and examples (after the rule above, so it takes effect for them).
+[[annotations]]
+path = ["docs/specs/schemas/**", "docs/specs/examples/**"]
+precedence = "closest"
+SPDX-FileCopyrightText = "2026 Open Communities Core contributors"
+SPDX-License-Identifier = "Apache-2.0"
