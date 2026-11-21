@@ -1,0 +1,102 @@
+{
+  "spec": "occ.governance-policy",
+  "version": "0.1",
+  "mode": "transitional",
+  "roles": [
+    {
+      "id": "administrator",
+      "rights": [
+        "community.update",
+        "community.close",
+        "membership.invite",
+        "membership.admit",
+        "membership.remove",
+        "role.grant",
+        "role.revoke",
+        "policy.amend",
+        "privacy.change",
+        "portability.export",
+        "portability.move",
+        "transfer.propose",
+        "log.read"
+      ],
+      "delegable": [
+        "membership.invite",
+        "membership.admit",
+        "community.update"
+      ],
+      "min_holders": 1,
+      "max_holders": 1
+    },
+    {
+      "id": "member",
+      "rights": [
+        "log.read"
+      ]
+    }
+  ],
+  "control": {
+    "role": "administrator",
+    "holder": "person"
+  },
+  "rules": [],
+  "transition": {
+    "from": "187aff10d7237bfc72fce65e99f70371725dad4e41ba514ad2d111b65f12f57f",
+    "to": {
+      "spec": "occ.governance-policy",
+      "version": "0.1",
+      "mode": "institutional",
+      "roles": [
+        {
+          "id": "administrator",
+          "rights": [
+            "community.update",
+            "community.close",
+            "membership.invite",
+            "membership.admit",
+            "membership.remove",
+            "role.grant",
+            "role.revoke",
+            "policy.amend",
+            "privacy.change",
+            "portability.export",
+            "portability.move",
+            "transfer.propose",
+            "log.read"
+          ],
+          "delegable": [
+            "membership.invite",
+            "membership.admit",
+            "community.update"
+          ],
+          "min_holders": 1,
+          "max_holders": 1
+        },
+        {
+          "id": "member",
+          "rights": [
+            "log.read"
+          ]
+        }
+      ],
+      "control": {
+        "role": "administrator",
+        "holder": "organisation"
+      },
+      "rules": [],
+      "transfer": {
+        "notice_days": 14
+      }
+    },
+    "suspended": [
+      "policy.amend",
+      "community.close",
+      "privacy.change",
+      "portability.move",
+      "transfer.propose"
+    ],
+    "incoming": [
+      "log.read"
+    ]
+  }
+}

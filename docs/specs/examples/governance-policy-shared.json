@@ -1,0 +1,84 @@
+{
+  "spec": "occ.governance-policy",
+  "version": "0.1",
+  "mode": "shared",
+  "roles": [
+    {
+      "id": "administrator",
+      "rights": [
+        "community.update",
+        "community.close",
+        "membership.invite",
+        "membership.admit",
+        "membership.remove",
+        "role.grant",
+        "role.revoke",
+        "policy.amend",
+        "privacy.change",
+        "portability.export",
+        "portability.move",
+        "transfer.propose",
+        "log.read"
+      ],
+      "delegable": [
+        "membership.invite",
+        "membership.admit"
+      ],
+      "min_holders": 2,
+      "max_holders": 5
+    },
+    {
+      "id": "member",
+      "rights": [
+        "log.read"
+      ]
+    }
+  ],
+  "control": {
+    "role": "administrator",
+    "holder": "person"
+  },
+  "rules": [
+    {
+      "action": "policy.amend",
+      "approval": {
+        "type": "count",
+        "role": "administrator",
+        "count": 2
+      }
+    },
+    {
+      "action": "transfer.propose",
+      "approval": {
+        "type": "all",
+        "role": "administrator"
+      },
+      "expires_after_days": 21
+    },
+    {
+      "action": "community.close",
+      "approval": {
+        "type": "all",
+        "role": "administrator"
+      }
+    },
+    {
+      "action": "membership.remove",
+      "approval": {
+        "type": "count",
+        "role": "administrator",
+        "count": 2
+      }
+    }
+  ],
+  "transfer": {
+    "notice_days": 21,
+    "accept_within_days": 30
+  },
+  "recovery": {
+    "inactivity_days": 90,
+    "quorum": {
+      "count": 5
+    }
+  }
+}
