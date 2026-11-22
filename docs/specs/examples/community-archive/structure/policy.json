@@ -1,0 +1,43 @@
+{
+  "spec": "occ.governance-policy",
+  "version": "0.1",
+  "mode": "individual",
+  "roles": [
+    {
+      "id": "administrator",
+      "rights": [
+        "community.update",
+        "community.close",
+        "membership.invite",
+        "membership.admit",
+        "membership.remove",
+        "role.grant",
+        "role.revoke",
+        "policy.amend",
+        "privacy.change",
+        "portability.export",
+        "portability.move",
+        "transfer.propose",
+        "log.read"
+      ],
+      "delegable": [
+        "membership.invite",
+        "membership.admit",
+        "community.update"
+      ],
+      "min_holders": 1,
+      "max_holders": 1
+    },
+    {
+      "id": "member",
+      "rights": [
+        "log.read"
+      ]
+    }
+  ],
+  "control": {
+    "role": "administrator",
+    "holder": "person"
+  },
+  "rules": []
+}

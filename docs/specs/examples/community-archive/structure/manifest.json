@@ -1,0 +1,65 @@
+{
+  "spec": "occ.community-archive",
+  "version": "0.1",
+  "kind": "structure",
+  "purpose": "move",
+  "community": {
+    "id": "c_8h3n5t1x"
+  },
+  "created_at": "2026-11-22T10:00:05Z",
+  "exporter": {
+    "software": "example-exporter",
+    "version": "0.0.0"
+  },
+  "authorisation": {
+    "by": "right",
+    "right": "portability.move",
+    "log_seq": 6,
+    "destination": "node-b.example"
+  },
+  "classes": [
+    "structural",
+    "derived"
+  ],
+  "log": {
+    "entries": 6,
+    "head": "8ee291155f2a27a95bbb8feb181a9c0d4cdc1e8e14d08e6b6fd5c2c9e286c606"
+  },
+  "files": [
+    {
+      "path": "community.json",
+      "sha256": "6e9c7d41e1d60fa2d360bebe3532b25ea947409dd86e5b8be6f970224a05d7f8",
+      "bytes": 380,
+      "class": "structural",
+      "role": "community"
+    },
+    {
+      "path": "policy.json",
+      "sha256": "ea9cc75182ccfa1ff4a7718730d7e69b160bfd774fc21ae0d369e7ea210a83b3",
+      "bytes": 837,
+      "class": "structural",
+      "role": "policy"
+    },
+    {
+      "path": "governance-log.jsonl",
+      "sha256": "a5b3da974596671f026e323bb2c91a28ccb0634ef472cc3577b900ce2edb1941",
+      "bytes": 2212,
+      "class": "structural",
+      "role": "governance-log"
+    },
+    {
+      "path": "memberships.json",
+      "sha256": "59168b41b289e7473edc338a0c656b73eb0bed433f6e19eed0d62a310102887c",
+      "bytes": 359,
+      "class": "structural",
+      "role": "memberships"
+    },
+    {
+      "path": "content/manifest.json",
+      "sha256": "bdeb4426696723cd30e8ad9ff4562159038edd2eb96b2bc71840f8df20a3a4ce",
+      "bytes": 615,
+      "class": "structural",
+      "role": "content-manifest"
+    }
+  ]
+}

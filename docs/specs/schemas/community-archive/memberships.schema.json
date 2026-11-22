@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:occ:spec:community-archive:0.1:memberships",
+  "title": "OCC community archive: memberships.json",
+  "description": "Defined by docs/specs/community-archive.md, version 0.1.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "ref",
+      "kind",
+      "state",
+      "joined_at"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "ref": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_-]{1,64}$"
+      },
+      "kind": {
+        "enum": [
+          "person",
+          "organisation"
+        ]
+      },
+      "state": {
+        "enum": [
+          "active",
+          "ended"
+        ]
+      },
+      "joined_at": {
+        "type": "string",
+        "format": "date"
+      },
+      "ended_at": {
+        "type": "string",
+        "format": "date"
+      },
+      "label": {
+        "type": "string"
+      }
+    },
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "state": {
+              "const": "ended"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "ended_at"
+          ]
+        },
+        "else": {
+          "not": {
+            "required": [
+              "ended_at"
+            ]
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "kind": {
+              "const": "person"
+            }
+          }
+        },
+        "then": {
+          "not": {
+            "required": [
+              "label"
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

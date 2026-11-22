@@ -1,0 +1,28 @@
+[
+  {
+    "id": "post-0001",
+    "kind": "note",
+    "author": "m_4f7k2p9d",
+    "created_at": "2026-03-05T17:00:00Z",
+    "log_seq": 3,
+    "audience": {
+      "scope": "members"
+    },
+    "sha256": "e6012a23bf70e2d5a1bfde0bb5afd601291f98f11aa108c3d2d76a71dd693244"
+  },
+  {
+    "id": "post-0002",
+    "kind": "note",
+    "author": "m_9c1x6r3w",
+    "created_at": "2026-03-06T08:12:00Z",
+    "log_seq": 3,
+    "audience": {
+      "scope": "listed",
+      "members": [
+        "m_4f7k2p9d",
+        "m_9c1x6r3w"
+      ]
+    },
+    "sha256": "d3d4ede97a9126b577af5be497a68e5311ce942b3f3447e94251ccb4d5e934dd"
+  }
+]

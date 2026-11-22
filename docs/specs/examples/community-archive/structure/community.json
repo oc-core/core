@@ -1,0 +1,17 @@
+{
+  "id": "c_8h3n5t1x",
+  "name": "Riverside Chess Club",
+  "description": "Weekly games and a small ladder.",
+  "created_at": "2026-03-02T18:04:11Z",
+  "created_by": "m_4f7k2p9d",
+  "privacy_mode": "private",
+  "data_controller": {
+    "kind": "person",
+    "member": "m_4f7k2p9d"
+  },
+  "settings": {
+    "language": "en",
+    "join": "by_invitation"
+  },
+  "member_count": 2
+}

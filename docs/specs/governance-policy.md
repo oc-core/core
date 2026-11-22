@@ -431,6 +431,7 @@ Every entry has:
 | `proposal.created`, `proposal.approved_by`, `proposal.rejected_by`, `proposal.approved`, `proposal.rejected`, `proposal.withdrawn`, `proposal.expired`, `proposal.carried_out` | each step of a proposal (§6) |
 | `transfer.verified`, `transfer.accepted`, `transfer.notice_issued`, `transfer.effective`, `transfer.abandoned` | each step of a transfer of control beyond its proposal (§8) |
 | `recovery.opened`, `recovery.claimed`, `recovery.closed` | each step of a recovery (§9) |
+| `portability.exported`, `portability.imported` | an archive is written or accepted; defined by the [community archive](community-archive.md) specification |
 
 An extension records its own entries with a type in its own namespace. The rules of §4.2 for
 unknown rights apply to unknown entry types: keep them, export them, give them no meaning.
@@ -439,7 +440,7 @@ The first entry of every log is `policy.adopted`. The policy in force and the ho
 role at any time can be derived from the log alone.
 
 How the integrity of the log is protected, and how personal data in it is handled when a member
-leaves, is defined by the community archive specification.
+leaves, is defined by the [community archive](community-archive.md) specification, §4 and §8.
 
 ## 11. Relation to other work
 
