@@ -1,0 +1,20 @@
+{
+  "spec": "occ.privacy-setting",
+  "version": "0.1",
+  "mode": "federated",
+  "notice_days": 21,
+  "discovery": {
+    "handle": "riverside_chess",
+    "fields": [
+      "name",
+      "summary",
+      "icon",
+      "link"
+    ]
+  },
+  "federation": {
+    "kinds": [
+      "announcement"
+    ]
+  }
+}
