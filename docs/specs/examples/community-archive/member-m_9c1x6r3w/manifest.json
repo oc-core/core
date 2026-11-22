@@ -1,0 +1,51 @@
+{
+  "spec": "occ.community-archive",
+  "version": "0.1",
+  "kind": "member",
+  "purpose": "move",
+  "community": {
+    "id": "c_8h3n5t1x"
+  },
+  "created_at": "2026-11-23T19:20:00Z",
+  "exporter": {
+    "software": "example-exporter",
+    "version": "0.0.0"
+  },
+  "authorisation": {
+    "by": "right",
+    "right": "portability.move",
+    "log_seq": 6,
+    "destination": "node-b.example"
+  },
+  "classes": [
+    "structural",
+    "personal",
+    "content"
+  ],
+  "member": {
+    "ref": "m_9c1x6r3w"
+  },
+  "structure": {
+    "manifest_sha256": "4f5d738de0f6188d730cc0d228e7506d9a796b22ac723234ebbb75eff3ba25e0"
+  },
+  "release": {
+    "basis": "member_confirmation",
+    "at": "2026-11-23T19:18:40Z"
+  },
+  "files": [
+    {
+      "path": "member.json",
+      "sha256": "061802c21e54f7a54b784ca327c25e4141559ec40fff5a66418a2b50b1da5106",
+      "bytes": 91,
+      "class": "personal",
+      "role": "member"
+    },
+    {
+      "path": "content/items/post-0002.json",
+      "sha256": "d3d4ede97a9126b577af5be497a68e5311ce942b3f3447e94251ccb4d5e934dd",
+      "bytes": 320,
+      "class": "content",
+      "role": "content-item"
+    }
+  ]
+}

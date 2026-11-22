@@ -20,6 +20,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   Governance, Policies, Portability, Federation.
 - ADR-001: technology stack.
 - Governance policy specification, draft 0.1, with a JSON Schema and three example policies.
+- Community archive specification, draft 0.1, with JSON Schemas and a sample archive.
 - Project files: licences (AGPL-3.0-or-later, CC-BY-4.0, CC0-1.0, Apache-2.0 for specification schemas), REUSE compliance,
   contributing guide with DCO and AI policy, code of conduct, security policy, governance.
 - Continuous integration: format, Credo, compile with warnings as errors, tests, Sobelow,

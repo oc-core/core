@@ -1,0 +1,352 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:occ:spec:community-archive:0.1:manifest",
+  "title": "OCC community archive: manifest.json",
+  "description": "Defined by docs/specs/community-archive.md, version 0.1.",
+  "type": "object",
+  "required": [
+    "spec",
+    "version",
+    "kind",
+    "purpose",
+    "community",
+    "created_at",
+    "exporter",
+    "authorisation",
+    "classes",
+    "files"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "spec": {
+      "const": "occ.community-archive"
+    },
+    "version": {
+      "const": "0.1"
+    },
+    "kind": {
+      "enum": [
+        "structure",
+        "member"
+      ]
+    },
+    "purpose": {
+      "enum": [
+        "move",
+        "backup",
+        "member_export"
+      ]
+    },
+    "community": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "exporter": {
+      "type": "object",
+      "required": [
+        "software",
+        "version"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "software": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "authorisation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "by",
+            "right",
+            "log_seq"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "by": {
+              "const": "right"
+            },
+            "right": {
+              "enum": [
+                "portability.export",
+                "portability.move"
+              ]
+            },
+            "log_seq": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "destination": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "by"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "by": {
+              "const": "member"
+            }
+          }
+        }
+      ]
+    },
+    "classes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "structural",
+          "personal",
+          "content",
+          "derived"
+        ]
+      }
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "sha256",
+          "bytes",
+          "class",
+          "role"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._-]*(/[a-z0-9][a-z0-9._-]*)*$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "class": {
+            "enum": [
+              "structural",
+              "personal",
+              "content",
+              "derived"
+            ]
+          },
+          "role": {
+            "enum": [
+              "community",
+              "policy",
+              "governance-log",
+              "memberships",
+              "content-manifest",
+              "member",
+              "content-item",
+              "media",
+              "extension"
+            ]
+          }
+        }
+      }
+    },
+    "log": {
+      "type": "object",
+      "required": [
+        "entries",
+        "head"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "entries": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "head": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "member": {
+      "type": "object",
+      "required": [
+        "ref"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "ref": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        }
+      }
+    },
+    "structure": {
+      "type": "object",
+      "required": [
+        "manifest_sha256"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "release": {
+      "type": "object",
+      "required": [
+        "basis",
+        "at"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "basis": {
+          "enum": [
+            "member_request",
+            "member_confirmation",
+            "same_controller",
+            "documented_basis"
+          ]
+        },
+        "at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "extensions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "version"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._-]*$",
+            "maxLength": 128
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "structure"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "log"
+        ],
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "member"
+              ]
+            },
+            {
+              "required": [
+                "release"
+              ]
+            },
+            {
+              "required": [
+                "structure"
+              ]
+            }
+          ]
+        },
+        "properties": {
+          "authorisation": {
+            "properties": {
+              "by": {
+                "const": "right"
+              }
+            }
+          },
+          "classes": {
+            "items": {
+              "enum": [
+                "structural",
+                "derived"
+              ]
+            }
+          },
+          "files": {
+            "items": {
+              "properties": {
+                "class": {
+                  "enum": [
+                    "structural",
+                    "derived"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "member"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "member",
+          "release"
+        ],
+        "not": {
+          "required": [
+            "log"
+          ]
+        }
+      }
+    }
+  ]
+}
