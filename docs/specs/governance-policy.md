@@ -96,7 +96,7 @@ A right is a string of two or more lowercase segments separated by dots, for exa
 | `role.grant` | granting a role to a member |
 | `role.revoke` | withdrawing a role from a member |
 | `policy.amend` | replacing the policy in force with another policy in the same mode |
-| `privacy.change` | changing the community's privacy mode |
+| `privacy.change` | changing the community's [privacy mode](privacy-modes.md) |
 | `portability.export` | exporting the community archive |
 | `portability.move` | authorising the community to move to another node |
 | `transfer.propose` | proposing a transfer of control |
@@ -453,7 +453,8 @@ leaves, is defined by the [community archive](community-archive.md) specificatio
   right `portability.move` is the point where they meet: it says who may authorise a move, not
   how the move is done.
 - **Other specifications in this folder.** The community archive carries the policy and the
-  log. The privacy modes say what `privacy.change` can select. Neither is defined here.
+  log. The [privacy modes](privacy-modes.md) say what `privacy.change` can select. Neither is
+  defined here.
 
 ## 12. Rules a schema cannot express
 
@@ -477,8 +478,8 @@ A validator MUST check these in addition to the schema:
 - **Vetoes** and weighted approvals.
 - **Verification of an organisation** beyond its existence on the node.
 - **Moderation** of content and conduct.
-- **What a node operator may do**: a matter for the operator's terms and for the privacy modes,
-  not for a community's policy.
+- **What a node operator may do**: a matter for the operator's terms and for the
+  [privacy modes](privacy-modes.md), not for a community's policy.
 
 ## 14. Open questions
 
