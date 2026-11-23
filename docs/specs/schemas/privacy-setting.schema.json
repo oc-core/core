@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:occ:spec:privacy-setting:0.1",
+  "title": "OCC privacy setting",
+  "description": "Privacy setting document defined by docs/specs/privacy-modes.md, version 0.1. Section 12 of that document lists rules this schema cannot express.",
+  "type": "object",
+  "required": [
+    "spec",
+    "version",
+    "mode"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "spec": {
+      "const": "occ.privacy-setting"
+    },
+    "version": {
+      "const": "0.1"
+    },
+    "mode": {
+      "enum": [
+        "private",
+        "discoverable",
+        "federated"
+      ]
+    },
+    "notice_days": {
+      "type": "integer",
+      "minimum": 14
+    },
+    "discovery": {
+      "$ref": "#/$defs/discovery"
+    },
+    "federation": {
+      "$ref": "#/$defs/federation"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "mode": {
+            "const": "private"
+          }
+        }
+      },
+      "then": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "discovery"
+              ]
+            },
+            {
+              "required": [
+                "federation"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "mode": {
+            "const": "discoverable"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "discovery"
+        ],
+        "not": {
+          "required": [
+            "federation"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "mode": {
+            "const": "federated"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "discovery",
+          "federation"
+        ]
+      }
+    }
+  ],
+  "$defs": {
+    "discovery": {
+      "type": "object",
+      "required": [
+        "handle",
+        "fields"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "handle": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_]{0,63}$"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "name",
+              "summary",
+              "icon",
+              "link"
+            ]
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "federation": {
+      "type": "object",
+      "required": [
+        "kinds"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "kinds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

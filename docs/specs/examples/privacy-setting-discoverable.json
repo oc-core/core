@@ -1,0 +1,13 @@
+{
+  "spec": "occ.privacy-setting",
+  "version": "0.1",
+  "mode": "discoverable",
+  "discovery": {
+    "handle": "riverside_chess",
+    "fields": [
+      "name",
+      "summary",
+      "link"
+    ]
+  }
+}

@@ -189,7 +189,7 @@ Schema [`community.schema.json`](schemas/community-archive/community.schema.json
 | `name`, `description` | structural | as shown to members |
 | `created_at` | structural | when the community was created |
 | `created_by` | structural | optional: member reference of the creator |
-| `privacy_mode` | structural | `private`, `discoverable` or `federated` |
+| `privacy_mode` | structural | `private`, `discoverable` or `federated`, as the [privacy modes](privacy-modes.md) specification defines them |
 | `data_controller` | structural | `kind`: `person` or `organisation`; `member`: the reference of the member who is the controller |
 | `settings` | structural | community settings, as an object; no free text written by members |
 | `member_count` | derived | number of memberships in force |
