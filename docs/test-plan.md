@@ -33,6 +33,11 @@ OCC makes four claims that can be checked from outside:
 This plan gives each claim tests with an identifier and an acceptance criterion. It also lists
 the conformance checks for each specification, so that a second implementation can use them.
 
+What is known about the other software before any test is run is in
+[ActivityPub and portability: state of the field](research/activitypub-and-portability.md).
+Three tests take their shape from it: T1 (actor type), T2 (object type) and T9 (two signature
+schemes).
+
 ## Abbreviations and identifiers
 
 | Short form | Stands for |
@@ -105,8 +110,8 @@ Rules for the lab:
 
 | ID | Scenario | Passes when | Covers | Class |
 |---|---|---|---|---|
-| T1 | A `federated` community on OCC A is looked up and followed from Mastodon | the handle resolves through WebFinger; the actor document is accepted by Mastodon and contains only what the privacy modes specification allows in an actor document (PM §5.3); `Follow` is answered with `Accept`; the follower is recorded on both sides; the followers collection lists nothing to an unauthenticated requester | PM §5.3, §5.4 | Required |
-| T2 | A member with `privacy.publish` creates a public item, edits it, then retracts it | `Create`, `Update` and `Delete` reach the follower's inbox and Mastodon shows, updates and removes the item; the payload names the community actor and no member; a reply, mention, like and share sent from Mastodon are discarded and not stored; a `privacy.published` and a `privacy.retracted` entry are in the governance log | PM §5.4, §6, §7.6 | Required |
+| T1 | A `federated` community on OCC A is looked up and followed from Mastodon. Run once for each actor type under consideration for the community actor, `Group` among them, because Mastodon documents its actors as persons | for at least one actor type: the handle resolves through WebFinger; the actor document is accepted by Mastodon and contains only what the privacy modes specification allows in an actor document (PM §5.3); `Follow` is answered with `Accept`; the follower is recorded on both sides; the followers collection lists nothing to an unauthenticated requester. The record gives the result for every type tried, and the type is fixed only after this test | PM §5.3, §5.4 | Required |
+| T2 | A member with `privacy.publish` creates a public item, edits it, then retracts it. The item is sent as a `Note`, the object type Mastodon treats as first-class | `Create`, `Update` and `Delete` reach the follower's inbox and Mastodon shows, updates and removes the item; the payload names the community actor and no member; a reply, mention, like and share sent from Mastodon are discarded and not stored; a `privacy.published` and a `privacy.retracted` entry are in the governance log | PM §5.4, §6, §7.6 | Required |
 
 ### 4.2 Privacy
 
@@ -137,7 +142,7 @@ Rules for the lab:
 
 | ID | Scenario | Passes when | Covers | Class |
 |---|---|---|---|---|
-| T9 | Inbound activities with a missing, invalid or expired signature, a signature by a key other than the claimed actor's, a replayed activity, and a `Delete` of an actor sent by someone else | each is rejected or ignored, changes no state, and is answered without revealing whether a community exists; a request for a member-only resource without a session is refused in the same way for an existing and a missing community | PM §5.2, §5.4 | Required |
+| T9 | Valid requests signed with the draft HTTP Signatures scheme and with RFC 9421, in both directions with Mastodon; then inbound activities with a missing, invalid or expired signature, a signature by a key other than the claimed actor's, a replayed activity, and a `Delete` of an actor sent by someone else | a valid request is accepted under either scheme, and Mastodon accepts what OCC signs; each invalid one is rejected or ignored, changes no state, and is answered without revealing whether a community exists; a request for a member-only resource without a session is refused in the same way for an existing and a missing community | PM §5.2, §5.4 | Required |
 
 ### 4.6 Nodes
 

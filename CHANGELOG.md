@@ -24,6 +24,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Interoperability test plan, draft 0.1: scenario tests with identifiers and acceptance
   criteria, and a conformance group for each specification.
 - Research: ActivityPub and portability, state of the field (desk research, nothing run).
+- Test plan: T1 run per candidate actor type, T2 sent as `Note`, T9 covers both signature schemes.
 - Governance policy specification, draft 0.1, with a JSON Schema and three example policies.
 - Community archive specification, draft 0.1, with JSON Schemas and a sample archive.
 - Privacy modes specification, draft 0.1, with a JSON Schema and one example setting per mode.
