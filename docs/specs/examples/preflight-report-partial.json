@@ -1,0 +1,60 @@
+{
+  "spec": "occ.preflight-report",
+  "version": "0.1",
+  "created_at": "2026-11-28T10:00:00Z",
+  "community": {
+    "id": "c_8h3n5t1x"
+  },
+  "source": {
+    "adapter": "occ.archive",
+    "version": "0.1.0",
+    "declaration": "dcd4d360f038b1609bd266392c4550f0d86cb9ad51f355ce967cb7babc6e4d53"
+  },
+  "destination": {
+    "adapter": "occ.archive",
+    "version": "0.1.0",
+    "declaration": "dcd4d360f038b1609bd266392c4550f0d86cb9ad51f355ce967cb7babc6e4d53"
+  },
+  "capabilities": {
+    "community.structure": {
+      "level": "full",
+      "outcome": "moves"
+    },
+    "governance.policy": {
+      "level": "full",
+      "outcome": "moves"
+    },
+    "governance.log": {
+      "level": "full",
+      "outcome": "moves"
+    },
+    "membership.records": {
+      "level": "full",
+      "outcome": "moves"
+    },
+    "content.items": {
+      "level": "full",
+      "outcome": "moves"
+    },
+    "content.media": {
+      "level": "full",
+      "outcome": "moves"
+    },
+    "member.parcel": {
+      "level": "full",
+      "outcome": "moves"
+    }
+  },
+  "findings": [
+    {
+      "code": "extension_missing",
+      "severity": "loss",
+      "subject": "calendar"
+    },
+    {
+      "code": "members_pending",
+      "severity": "notice"
+    }
+  ],
+  "result": "partial"
+}

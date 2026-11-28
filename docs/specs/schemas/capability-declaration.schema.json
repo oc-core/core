@@ -1,0 +1,324 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:occ:spec:capability-declaration:0.1",
+  "title": "OCC capability declaration",
+  "description": "Capability declaration defined by docs/specs/capabilities.md, version 0.1. Section 11 of that document lists rules this schema cannot express.",
+  "type": "object",
+  "required": [
+    "spec",
+    "version",
+    "adapter",
+    "counterpart",
+    "capabilities"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "spec": {
+      "const": "occ.capability-declaration"
+    },
+    "version": {
+      "const": "0.1"
+    },
+    "adapter": {
+      "type": "object",
+      "required": [
+        "id",
+        "version",
+        "kind"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "kind": {
+          "enum": [
+            "portability",
+            "federation"
+          ]
+        }
+      }
+    },
+    "counterpart": {
+      "type": "object",
+      "required": [
+        "interface"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "interface": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*(\\.[a-z][a-z0-9_-]*)*$"
+        },
+        "versions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        },
+        "system": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      },
+      "if": {
+        "properties": {
+          "interface": {
+            "const": "occ.community-archive"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "versions"
+        ]
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/entry"
+      },
+      "properties": {
+        "identity.actor_move": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/entry"
+            },
+            {
+              "properties": {
+                "in": {
+                  "properties": {
+                    "level": {
+                      "enum": [
+                        "partial",
+                        "none"
+                      ]
+                    }
+                  }
+                },
+                "out": {
+                  "properties": {
+                    "level": {
+                      "enum": [
+                        "partial",
+                        "none"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "graph.followers": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/entry"
+            },
+            {
+              "properties": {
+                "in": {
+                  "properties": {
+                    "level": {
+                      "enum": [
+                        "partial",
+                        "none"
+                      ]
+                    }
+                  }
+                },
+                "out": {
+                  "properties": {
+                    "level": {
+                      "enum": [
+                        "partial",
+                        "none"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "level": {
+      "enum": [
+        "full",
+        "partial",
+        "none"
+      ]
+    },
+    "requirement": {
+      "enum": [
+        "federation_enabled",
+        "mode_discoverable",
+        "mode_federated",
+        "counterpart_reachable",
+        "member_release"
+      ]
+    },
+    "limit": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$"
+        },
+        "detail": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 280
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "enum": [
+                  "subset",
+                  "manual_step"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "detail"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "pattern": "\\."
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "detail"
+            ]
+          },
+          "else": {
+            "properties": {
+              "code": {
+                "enum": [
+                  "remote_dependent",
+                  "subset",
+                  "local_only",
+                  "manual_step",
+                  "irreversible"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "support": {
+      "type": "object",
+      "required": [
+        "level"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "level": {
+          "$ref": "#/$defs/level"
+        },
+        "limits": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/limit"
+          }
+        },
+        "requires": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/requirement"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "level": {
+                "const": "partial"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "limits"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "limits"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "level": {
+                "const": "none"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "requires"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "entry": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "in": {
+          "$ref": "#/$defs/support"
+        },
+        "out": {
+          "$ref": "#/$defs/support"
+        }
+      }
+    }
+  }
+}

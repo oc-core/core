@@ -1,0 +1,594 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:occ:spec:preflight-report:0.1",
+  "title": "OCC pre-flight report",
+  "description": "Pre-flight report defined by docs/specs/capabilities.md, version 0.1. Section 11 of that document lists rules this schema cannot express.",
+  "type": "object",
+  "required": [
+    "spec",
+    "version",
+    "created_at",
+    "community",
+    "capabilities",
+    "findings",
+    "result"
+  ],
+  "additionalProperties": false,
+  "anyOf": [
+    {
+      "required": [
+        "source"
+      ]
+    },
+    {
+      "required": [
+        "destination"
+      ]
+    }
+  ],
+  "properties": {
+    "spec": {
+      "const": "occ.preflight-report"
+    },
+    "version": {
+      "const": "0.1"
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?Z$"
+    },
+    "community": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      }
+    },
+    "source": {
+      "$ref": "#/$defs/side"
+    },
+    "destination": {
+      "$ref": "#/$defs/side"
+    },
+    "capabilities": {
+      "type": "object",
+      "required": [
+        "community.structure",
+        "governance.policy",
+        "governance.log",
+        "membership.records",
+        "content.items",
+        "content.media",
+        "member.parcel"
+      ],
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/result"
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/finding"
+      }
+    },
+    "result": {
+      "enum": [
+        "complete",
+        "partial",
+        "blocked"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "findings": {
+            "contains": {
+              "properties": {
+                "severity": {
+                  "const": "blocks"
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "const": "blocked"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "result": {
+            "enum": [
+              "complete",
+              "partial"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "findings": {
+            "contains": {
+              "properties": {
+                "severity": {
+                  "const": "loss"
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "enum": [
+              "partial",
+              "blocked"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "side": {
+      "type": "object",
+      "required": [
+        "adapter",
+        "version",
+        "declaration"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "adapter": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "declaration": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "requirement": {
+      "enum": [
+        "federation_enabled",
+        "mode_discoverable",
+        "mode_federated",
+        "counterpart_reachable",
+        "member_release"
+      ]
+    },
+    "limit": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$"
+        },
+        "detail": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 280
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "enum": [
+                  "subset",
+                  "manual_step"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "detail"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "pattern": "\\."
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "detail"
+            ]
+          },
+          "else": {
+            "properties": {
+              "code": {
+                "enum": [
+                  "remote_dependent",
+                  "subset",
+                  "local_only",
+                  "manual_step",
+                  "irreversible"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "result": {
+      "type": "object",
+      "required": [
+        "level",
+        "outcome"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "level": {
+          "enum": [
+            "full",
+            "partial",
+            "none"
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "moves",
+            "moves_partly",
+            "stays"
+          ]
+        },
+        "limits": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/limit"
+          }
+        },
+        "unmet": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/requirement"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "level": {
+                "const": "full"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "const": "moves"
+              }
+            },
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "limits"
+                  ]
+                },
+                {
+                  "required": [
+                    "unmet"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "level": {
+                "const": "partial"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "const": "moves_partly"
+              }
+            },
+            "required": [
+              "limits"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "level": {
+                "const": "none"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "const": "stays"
+              }
+            },
+            "not": {
+              "required": [
+                "limits"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "finding": {
+      "type": "object",
+      "required": [
+        "code",
+        "severity"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$"
+        },
+        "severity": {
+          "enum": [
+            "blocks",
+            "loss",
+            "notice"
+          ]
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9._:-]+$"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "interface_mismatch"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "severity": {
+                "const": "blocks"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "version_unsupported"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "severity": {
+                "const": "blocks"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "rules_incomplete"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "severity": {
+                "const": "blocks"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "mode_unsupported"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "severity": {
+                "const": "loss"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "extension_missing"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "severity": {
+                "const": "loss"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "right_unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "severity": {
+                "const": "loss"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "members_pending"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "severity": {
+                "const": "notice"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "const": "irreversible_step"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "severity": {
+                "const": "notice"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "enum": [
+                  "version_unsupported",
+                  "rules_incomplete",
+                  "mode_unsupported",
+                  "extension_missing",
+                  "right_unknown",
+                  "irreversible_step"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "subject"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "enum": [
+                  "interface_mismatch",
+                  "members_pending"
+                ]
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "subject"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "code": {
+                "pattern": "\\."
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "severity": {
+                "enum": [
+                  "loss",
+                  "notice"
+                ]
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "code": {
+                "enum": [
+                  "interface_mismatch",
+                  "version_unsupported",
+                  "rules_incomplete",
+                  "mode_unsupported",
+                  "extension_missing",
+                  "right_unknown",
+                  "members_pending",
+                  "irreversible_step"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
