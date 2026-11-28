@@ -33,6 +33,30 @@ OCC makes four claims that can be checked from outside:
 This plan gives each claim tests with an identifier and an acceptance criterion. It also lists
 the conformance checks for each specification, so that a second implementation can use them.
 
+## Abbreviations and identifiers
+
+| Short form | Stands for |
+|---|---|
+| GP | the [governance policy](specs/governance-policy.md) specification |
+| CA | the [community archive](specs/community-archive.md) specification |
+| PM | the [privacy modes](specs/privacy-modes.md) specification |
+| AC | the [adapter capabilities](specs/capabilities.md) specification |
+| §n | section n of the specification named before it: "PM §5.3" is section 5.3 of privacy modes |
+| P1 to P9 | the nine rules that hold in every privacy mode (PM §5.1) |
+| G1 to G4 | the four guarantees to members during a transfer of control (GP §8.4) |
+| OCC A, OCC B | the two OCC nodes of the lab (section 3) |
+| Observer | the recorder that keeps what the servers send each other (section 3) |
+
+| Test identifier | Group |
+|---|---|
+| T1 to T13 | scenario tests between servers: federation, privacy, portability, governance, security, experiments (section 4) |
+| N01 to N07 | scenario tests about a node and the communities on it (section 4) |
+| PP01 to PP08 | participant profiles and grants, from ADR 0008 (section 5) |
+| MT01 to MT08 | optional modules and templates, from ADR 0009 (section 5) |
+| CG-GP, CG-CA, CG-PM, CG-AC | the conformance group of the specification named after the hyphen (section 6) |
+
+Numbers are not consecutive: an identifier that is not in this plan is not in use.
+
 ## 2. How a result is judged
 
 Every test has a class.
@@ -75,8 +99,7 @@ Rules for the lab:
 
 ## 4. Scenario tests
 
-"Covers" names the sections a test exercises. GP is the governance policy specification, CA the
-community archive, PM privacy modes and AC adapter capabilities.
+"Covers" names the sections a test exercises, with the abbreviations listed after section 1.
 
 ### 4.1 Federation
 
