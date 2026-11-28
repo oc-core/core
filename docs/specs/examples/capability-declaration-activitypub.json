@@ -1,0 +1,75 @@
+{
+  "spec": "occ.capability-declaration",
+  "version": "0.1",
+  "adapter": {
+    "id": "occ.activitypub",
+    "version": "0.1.0",
+    "kind": "federation"
+  },
+  "counterpart": {
+    "interface": "activitypub"
+  },
+  "capabilities": {
+    "identity.actor_move": {
+      "in": {
+        "level": "partial",
+        "limits": [
+          {
+            "code": "remote_dependent"
+          },
+          {
+            "code": "manual_step",
+            "detail": "Someone with control of the old actor has to name the new actor there before the move is announced."
+          }
+        ],
+        "requires": [
+          "federation_enabled",
+          "mode_discoverable"
+        ]
+      },
+      "out": {
+        "level": "partial",
+        "limits": [
+          {
+            "code": "remote_dependent"
+          },
+          {
+            "code": "irreversible"
+          }
+        ],
+        "requires": [
+          "federation_enabled",
+          "mode_discoverable"
+        ]
+      }
+    },
+    "graph.followers": {
+      "in": {
+        "level": "partial",
+        "limits": [
+          {
+            "code": "remote_dependent",
+            "detail": "A follower arrives only if their server honours the announcement and follows the new actor."
+          }
+        ],
+        "requires": [
+          "federation_enabled",
+          "mode_federated",
+          "counterpart_reachable"
+        ]
+      },
+      "out": {
+        "level": "partial",
+        "limits": [
+          {
+            "code": "remote_dependent"
+          }
+        ],
+        "requires": [
+          "federation_enabled",
+          "mode_federated"
+        ]
+      }
+    }
+  }
+}

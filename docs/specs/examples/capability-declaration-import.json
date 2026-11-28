@@ -1,0 +1,39 @@
+{
+  "spec": "occ.capability-declaration",
+  "version": "0.1",
+  "adapter": {
+    "id": "example.activitystreams_import",
+    "version": "0.1.0",
+    "kind": "portability"
+  },
+  "counterpart": {
+    "interface": "activitystreams.export"
+  },
+  "capabilities": {
+    "content.items": {
+      "in": {
+        "level": "partial",
+        "limits": [
+          {
+            "code": "subset",
+            "detail": "Only items the export marks as public are imported; each becomes readable by all members."
+          },
+          {
+            "code": "local_only"
+          }
+        ]
+      }
+    },
+    "content.media": {
+      "in": {
+        "level": "partial",
+        "limits": [
+          {
+            "code": "subset",
+            "detail": "Only files referred to by an imported item."
+          }
+        ]
+      }
+    }
+  }
+}

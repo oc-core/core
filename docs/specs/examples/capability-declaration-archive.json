@@ -1,0 +1,79 @@
+{
+  "spec": "occ.capability-declaration",
+  "version": "0.1",
+  "adapter": {
+    "id": "occ.archive",
+    "version": "0.1.0",
+    "kind": "portability"
+  },
+  "counterpart": {
+    "interface": "occ.community-archive",
+    "versions": [
+      "0.1"
+    ]
+  },
+  "capabilities": {
+    "community.structure": {
+      "in": {
+        "level": "full"
+      },
+      "out": {
+        "level": "full"
+      }
+    },
+    "governance.policy": {
+      "in": {
+        "level": "full"
+      },
+      "out": {
+        "level": "full"
+      }
+    },
+    "governance.log": {
+      "in": {
+        "level": "full"
+      },
+      "out": {
+        "level": "full"
+      }
+    },
+    "membership.records": {
+      "in": {
+        "level": "full"
+      },
+      "out": {
+        "level": "full"
+      }
+    },
+    "content.items": {
+      "in": {
+        "level": "full"
+      },
+      "out": {
+        "level": "full"
+      }
+    },
+    "content.media": {
+      "in": {
+        "level": "full"
+      },
+      "out": {
+        "level": "full"
+      }
+    },
+    "member.parcel": {
+      "in": {
+        "level": "full",
+        "requires": [
+          "member_release"
+        ]
+      },
+      "out": {
+        "level": "full",
+        "requires": [
+          "member_release"
+        ]
+      }
+    }
+  }
+}
