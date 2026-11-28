@@ -19,6 +19,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Empty domain contexts documenting the boundaries: Identity, Communities, Membership,
   Governance, Policies, Portability, Federation.
 - ADR-001: technology stack.
+- ADR-0008: participant profiles and grants. ADR-0009: optional modules and community templates.
 - Governance policy specification, draft 0.1, with a JSON Schema and three example policies.
 - Community archive specification, draft 0.1, with JSON Schemas and a sample archive.
 - Privacy modes specification, draft 0.1, with a JSON Schema and one example setting per mode.
