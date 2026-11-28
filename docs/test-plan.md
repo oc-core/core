@@ -82,7 +82,7 @@ community archive, PM privacy modes and AC adapter capabilities.
 
 | ID | Scenario | Passes when | Covers | Class |
 |---|---|---|---|---|
-| T1 | A `federated` community on OCC A is looked up and followed from Mastodon | the handle resolves through WebFinger; the actor document is accepted by Mastodon and contains only the fields of PM §5.3; `Follow` is answered with `Accept`; the follower is recorded on both sides; the followers collection lists nothing to an unauthenticated requester | PM §5.3, §5.4 | Required |
+| T1 | A `federated` community on OCC A is looked up and followed from Mastodon | the handle resolves through WebFinger; the actor document is accepted by Mastodon and contains only what the privacy modes specification allows in an actor document (PM §5.3); `Follow` is answered with `Accept`; the follower is recorded on both sides; the followers collection lists nothing to an unauthenticated requester | PM §5.3, §5.4 | Required |
 | T2 | A member with `privacy.publish` creates a public item, edits it, then retracts it | `Create`, `Update` and `Delete` reach the follower's inbox and Mastodon shows, updates and removes the item; the payload names the community actor and no member; a reply, mention, like and share sent from Mastodon are discarded and not stored; a `privacy.published` and a `privacy.retracted` entry are in the governance log | PM §5.4, §6, §7.6 | Required |
 
 ### 4.2 Privacy
